@@ -1,0 +1,51 @@
+controllers:
+    resource: ../src/Controller/
+    type: annotation
+
+kernel:
+    resource: ../src/Kernel.php
+    type: annotation
+
+#==========USER==========
+#login to get jwt token
+api_login_check:
+    path: /api/login_check
+
+#register new user
+api_register:
+    path: /api/register
+    controller: App\Controller\RegistrationController::register
+    methods: [POST]
+
+#==========Desygner==========
+#get list of images by tag name or provider.
+images_search:
+    path: /api/search
+    controller: App\Controller\SearchController::indexAction
+    methods: [GET]
+
+#upload image
+image_upload:
+    path: /api/image/upload
+    controller: App\Controller\ImageController::imageUploadAction
+    methods: [POST]
+
+#Add base64 image
+image_create_base64:
+    path: /api/image/base64
+    controller: App\Controller\ImageController::addBase64ImageAction
+    methods: [POST]
+
+#Add remote image
+image_create_remote:
+    path: /api/image/remote
+    controller: App\Controller\ImageController::addRemoteImageAction
+    methods: [POST]
+
+# Bookmark image
+image_bookmark:
+    path: /api/image/{image_id}/bookmark
+    controller: App\Controller\BookmarkController::createAction
+    methods: [POST]
+    requirements:
+        image_id: '\d+'
