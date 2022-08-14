@@ -1,39 +1,37 @@
-# Symfony Docker
+# Project Installation
 
-A [Docker](https://www.docker.com/)-based installer and runtime for the [Symfony](https://symfony.com) web framework, with full [HTTP/2](https://symfony.com/doc/current/weblink.html), HTTP/3 and HTTPS support.
+Execute following commands
 
-![CI](https://github.com/dunglas/symfony-docker/workflows/CI/badge.svg)
+First, [download this repo](https://github.com/mkhalid03/desygner).
 
-## Getting Started
+    git clone git@github.com:mkhalid03/desygner.git
 
-1. If not already done, [install Docker Compose](https://docs.docker.com/compose/install/)
-2. Run `docker-compose build --pull --no-cache` to build fresh images
-3. Run `docker-compose up` (the logs will be displayed in the current shell)
-4. Open `https://localhost` in your favorite web browser and [accept the auto-generated TLS certificate](https://stackoverflow.com/a/15076602/1352334)
-5. Run `docker-compose down --remove-orphans` to stop the Docker containers.
+Enter to the project.
 
-## Features
+    cd desygner
 
-* Production, development and CI ready
-* Automatic HTTPS (in dev and in prod!)
-* HTTP/2, HTTP/3 and [Preload](https://symfony.com/doc/current/web_link.html) support
-* Built-in [Mercure](https://symfony.com/doc/current/mercure.html) hub
-* [Vulcain](https://vulcain.rocks) support
-* Just 2 services (PHP FPM and Caddy server)
-* Super-readable configuration
+Build the Docker images:
 
-**Enjoy!**
+    docker-compose build --no-cache --pull
 
-## Docs
+Start the project!
 
-1. [Build options](docs/build.md)
-2. [Using Symfony Docker with an existing project](docs/existing-project.md)
-3. [Support for extra services](docs/extra-services.md)
-4. [Deploying in production](docs/production.md)
-5. [Installing Xdebug](docs/xdebug.md)
-6. [Using a Makefile](docs/makefile.md)
-7. [Troubleshooting](docs/troubleshooting.md)
+    docker-compose up -d
 
-## Credits
+Connect to the **PHP** bash
 
-Created by [Kévin Dunglas](https://dunglas.fr), co-maintained by [Maxime Helias](https://twitter.com/maxhelias) and sponsored by [Les-Tilleuls.coop](https://les-tilleuls.coop).
+    docker exec -it desygner_php /bin/sh
+
+Execute migrations
+
+    bin/console doctrine:migrations:execute 'DoctrineMigrations\Version20220510085530'--up
+
+Generate the SSL keys
+
+    bin/console lexik:jwt:generate-keypair --overwrite
+
+Browse https://localhost, your Docker configuration is ready!
+
+> **_NOTE:_**  Please confirm `127.0.0.1 localhost` exists in hosts file
+
+
